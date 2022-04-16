@@ -1,5 +1,6 @@
 main: net.laustz.GeyserInteractionFix
 name: GeyserInteractionFix
+depend: [floodgate]
 version: ${version}
 api-version: 1.18
 authors:

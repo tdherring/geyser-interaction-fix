@@ -53,7 +53,6 @@ public class GeyserInteractionFix extends JavaPlugin {
 
 		// Load settings from config.
 		this.configSettings = new ConfigSettings();
-		this.configSettings.setFloodgatePrefix(config.getString("floodgatePrefix"));
 		this.configSettings.setLocationUpdateInterval(config.getLong("locationUpdateInterval"));
 	}
 

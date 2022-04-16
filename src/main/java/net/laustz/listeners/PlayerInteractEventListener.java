@@ -11,9 +11,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import net.laustz.GeyserInteractionFix;
+import org.geysermc.floodgate.api.FloodgateApi;
 
 public class PlayerInteractEventListener implements Listener {
+	private static FloodgateApi floodgateApi = FloodgateApi.getInstance();
 
 	/**
 	 * Checks if the player is violating restrictions and stops them.
@@ -27,10 +28,10 @@ public class PlayerInteractEventListener implements Listener {
 		}
 
 		Player player = event.getPlayer();
-		String prefix = GeyserInteractionFix.getInstance().getConfigSettings().getFloodgatePrefix();
+		boolean isBedrockPlayer = floodgateApi.getPlayer(player.getUniqueId()) != null;
 
 		// Only check bedrock players.
-		if (player.getName().startsWith(prefix)) {
+		if (isBedrockPlayer) {
 			Block block = event.getClickedBlock();
 			BlockState state = block.getState();
 			// The location to teleport the player back to if needed.
