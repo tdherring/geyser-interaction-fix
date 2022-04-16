@@ -6,6 +6,7 @@ This plugin addresses the issue by providing a simple mechanism which tracks pla
 
 ## config.yml
 
-There is one setting in `config.yml`:
+Configuration settings for `config.yml`:
 
-  `floodgatePrefix` - The prefix given to your bedrock players, you can find this in Floodgate's config. (Default: ".")
+- `floodgatePrefix` - The prefix given to your bedrock players, you can find this in Floodgate's config. (Default: ".")
+- `locationUpdateInterval` - How often to update bedrock player locations in ms. Lower values mean less rubber banding, but are more CPU intensive. (Default: 1000)

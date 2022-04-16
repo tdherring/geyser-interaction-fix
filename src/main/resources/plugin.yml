@@ -1,6 +1,6 @@
 main: net.laustz.GeyserInteractionFix
 name: GeyserInteractionFix
-version: 1.0
+version: ${version}
 api-version: 1.18
 authors:
   - "Laustz"

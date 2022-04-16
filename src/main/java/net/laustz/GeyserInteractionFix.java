@@ -1,6 +1,11 @@
 package net.laustz;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import com.tchristofferson.configupdater.ConfigUpdater;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.laustz.listeners.PlayerInteractEventListener;
@@ -33,10 +38,23 @@ public class GeyserInteractionFix extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerInteractEventListener(), this);
 		Bukkit.getLogger().info("Registered PlayerInteractEvent Listener");
 
-		// Load settings from config
+		FileConfiguration config = getConfig();
+
+		// Create the config if it's not there already.
 		saveDefaultConfig();
+
+		// Update config settings if changes made.
+		try {
+			File configFile = new File(getInstance().getDataFolder(), "config.yml");
+			ConfigUpdater.update(getInstance(), "config.yml", configFile, new ArrayList<String>());
+		} catch (IOException err) {
+			err.printStackTrace();
+		}
+
+		// Load settings from config.
 		this.configSettings = new ConfigSettings();
-		this.configSettings.setFloodgatePrefix(getConfig().getString("floodgatePrefix"));
+		this.configSettings.setFloodgatePrefix(config.getString("floodgatePrefix"));
+		this.configSettings.setLocationUpdateInterval(config.getLong("locationUpdateInterval"));
 	}
 
 	/**

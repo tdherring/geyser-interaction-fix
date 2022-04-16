@@ -2,22 +2,25 @@ package net.laustz;
 
 public class ConfigSettings {
 	private String floodgatePrefix;
+	private long locationUpdateInterval;
 
-	/**
-	 * Returns the floodgate prefix.
-	 * 
-	 * @return The floodgate prefix.
-	 */
+	// Getters
+
 	public String getFloodgatePrefix() {
 		return floodgatePrefix;
 	}
 
-	/**
-	 * Sets the prefix for the bedrock players.
-	 * 
-	 * @param floodgatePrefix The prefix to set.
-	 */
+	public long getLocationUpdateInterval() {
+		return locationUpdateInterval;
+	}
+
+	// Setters
+
 	public void setFloodgatePrefix(String prefix) {
 		floodgatePrefix = prefix;
+	}
+
+	public void setLocationUpdateInterval(long interval) {
+		locationUpdateInterval = interval;
 	}
 }

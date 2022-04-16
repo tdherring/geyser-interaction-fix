@@ -8,9 +8,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import net.laustz.ConfigSettings;
 import net.laustz.GeyserInteractionFix;
 
 public class PlayerMoveEventListener implements Listener {
+	private long lastLoggedTime;
 	private static HashMap<UUID, Location> locations = new HashMap<UUID, Location>();
 
 	/**
@@ -21,14 +23,20 @@ public class PlayerMoveEventListener implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void handleMoveEvent(PlayerMoveEvent event) {
+		ConfigSettings configSettings = GeyserInteractionFix.getInstance().getConfigSettings();
 		Player player = event.getPlayer();
-		UUID uuid = player.getUniqueId();
-		Location loc = player.getLocation();
+		String prefix = configSettings.getFloodgatePrefix();
 
-		String prefix = GeyserInteractionFix.getInstance().getConfigSettings().getFloodgatePrefix();
+		// Only log player location once every interval.
+		if (System.currentTimeMillis() - lastLoggedTime >= configSettings.getLocationUpdateInterval() && player.getName().startsWith(prefix)) {
+			UUID uuid = player.getUniqueId();
+			Location loc = player.getLocation();
 
-		if (!loc.getBlock().getType().toString().contains("DOOR") && player.getName().startsWith(prefix)) {
-			setLocation(uuid, loc);
+			if (!loc.getBlock().getType().toString().contains("DOOR")) {
+				setLocation(uuid, loc);
+			}
+
+			lastLoggedTime = System.currentTimeMillis();
 		}
 	}
 
